@@ -1,0 +1,20 @@
+[stub] A1 stub on http://localhost:8791
+=== A1: buyer-side payout-redirection non-verification — fork proof with the UNMODIFIED SDK ===
+roles: buyer=0xF21E50Bfeb8E27359BadBC47fDde97eb01fe3a7F seller=0x24fB41c25b77cA2D716770d9FB04601A71E085EE third=0xaE2c0B7cB67174fcf099E2Bc452ab4b7aacA84cc
+seller signed consent with buyerReceive = 0xaE2c0B7cB67174fcf099E2Bc452ab4b7aacA84cc (NOT the buyer)
+Bull SDK WARNING: using http://localhost:8791 instead of https://www.bull.family. Only continue if you run this server yourself.
+[stub] settle: built createDeal with buyerReceive=0xaE2c0B7cB67174fcf099E2Bc452ab4b7aacA84cc (buyer asked for none)
+SDK open() returned dealId 3 — NO error, NO warning about the redirection
+on-chain deals(3): sellerPayout (idx 10) = 0x24fB41c25b77cA2D716770d9FB04601A71E085EE, buyerReceive (idx 11) = 0xaE2c0B7cB67174fcf099E2Bc452ab4b7aacA84cc
+  -> the redirection was on-chain and readable the whole time; SDK #deal() returns only idx 0-5,7-9 and open() compares only those fields (bull.mjs:111-114, 217-219)
+buyer fund() sent: 0xeca3e1032ef7fa79ad00a196430bcc9c771af358fb26cc129ddde0abdd3c27ce
+Bull SDK WARNING: using http://localhost:8791 instead of https://www.bull.family. Only continue if you run this server yourself.
+seller fund() sent: 0x02ae33e3de81de082d9e9df175281469d6c67689357854ecabd594ee2a0e6314, 0xb30d8711128a55384e289f7a5a36885f86d0b0a2f09a123f0c70a8132f500d39
+SDK waitSettled() confirms settlement (its chain cross-check passed too)
+deal status after funding: 2 (2 = settled)
+MOCK balance of THIRD wallet: 100000000 (expected 100000000 = the full sellAmount)
+MOCK balance of BUYER:        0 (expected 0 — the buyer paid and received nothing)
+seller ETH: 9.99993006305995696 -> 10.009670068335246219 (paid ~0.0099 ETH = 0.01 minus the 1% fee, less gas)
+
+=== A1 VERDICT: PROVEN on the local fork ===
+The unmodified official SDK opened and funded a deal whose buyerReceive redirected the purchased tokens to a third wallet; every buyer-side check passed and settlement paid the seller in full.
